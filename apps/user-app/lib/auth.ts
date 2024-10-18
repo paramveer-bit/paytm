@@ -45,8 +45,10 @@ export const authOptions: NextAuthOptions = {
                     const user = await db.user.create({
                         data: {
                             number: credentials.phone,
-                            password: hashedPassword
+                            password: hashedPassword,
+                            otp: 123456
                         }
+
                     });
                     console.log("Created user")
 
