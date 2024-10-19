@@ -1,21 +1,22 @@
+/*
+  Warnings:
+
+  - A unique constraint covering the columns `[number]` on the table `User` will be added. If there are existing duplicate values, this will fail.
+  - Added the required column `number` to the `User` table without a default value. This is not possible if the table is not empty.
+
+*/
 -- CreateEnum
 CREATE TYPE "AuthType" AS ENUM ('Google', 'Github');
 
 -- CreateEnum
 CREATE TYPE "OnRampStatus" AS ENUM ('Success', 'Failure', 'Processing');
 
--- CreateTable
-CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
-    "email" TEXT,
-    "name" TEXT,
-    "number" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "otp" INTEGER NOT NULL DEFAULT 0,
-    "verified" BOOLEAN NOT NULL DEFAULT false,
-
-    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
-);
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "number" TEXT NOT NULL,
+ADD COLUMN     "otp" INTEGER,
+ADD COLUMN     "password" TEXT,
+ADD COLUMN     "verified" BOOLEAN NOT NULL DEFAULT false,
+ALTER COLUMN "email" DROP NOT NULL;
 
 -- CreateTable
 CREATE TABLE "OnRampTransaction" (
@@ -52,16 +53,13 @@ CREATE TABLE "p2pTransfer" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_number_key" ON "User"("number");
-
--- CreateIndex
 CREATE UNIQUE INDEX "OnRampTransaction_token_key" ON "OnRampTransaction"("token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Balance_userId_key" ON "Balance"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_number_key" ON "User"("number");
 
 -- AddForeignKey
 ALTER TABLE "OnRampTransaction" ADD CONSTRAINT "OnRampTransaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
