@@ -11,9 +11,9 @@ export const Appbar = ({
     UserButton,
 }: AppbarProps) => {
     return (
-        <div className="bg-slate-500 text-neutral-100 font-semibold ">
+        <div className="bg-slate-400 border-b-2 border-white text-neutral-100 font-semibold ">
             <div className="container mx-auto flex items-center justify-between p-4">
-                <Link href={"/"} className="text-xl">Home</Link>
+                <Link href={"/"} className="text-xl ml-4">My App</Link>
                 <div>
                     {user ? (
                         <div>

@@ -1,8 +1,6 @@
 import { auth } from "@clerk/nextjs/server"
 import {ClerkProvider,UserButton} from '@clerk/nextjs'
-import { Appbar } from "@repo/ui/appbar"
 import Sidebar from "@repo/ui/Sidebar"
-import './globals.css'
 
 
 
@@ -11,14 +9,11 @@ export default function RootLayout({  children,}: {children: React.ReactNode}) {
 
   const {userId} = auth()
   return (
-      <html lang="en">
-        <body className="bg-slate-300">
-          <ClerkProvider>
-            <Appbar user={userId} UserButton={UserButton} />
+    <div className="flex flex-1 overflow-hidden">
+        <Sidebar />
+        <main className="flex-1 overflow-auto">
             {children}
-            
-          </ClerkProvider>
-        </body>
-      </html>
+        </main>
+    </div>   
   )
 }
