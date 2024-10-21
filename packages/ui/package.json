@@ -7,7 +7,10 @@
     "./button": "./src/button.tsx",
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx",
-    "./Sidebar": "./src/Sidebar.tsx"
+    "./Sidebar": "./src/Sidebar.tsx",
+    "./AddMoney" : "./src/addmoney.tsx",
+    "./Balance" : "./src/balance.tsx",
+    "./RecentTrans" : "./src/recentTrans.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

@@ -60,20 +60,32 @@ export async function POST(req: Request) {
             return new Response('', { status: 200 })
         }
         try {
-            const res = await db.user.create({
-                data: {
-                    email: email_addresses[0].email_address,
-                    number: phone_numbers[0].phone_number,
-                    clerkId: id,
-                    verified: true
-                }
-            });
-            console.log("User successfully created:", res);
-            await clerkClient.users.updateUserMetadata(id, {
-                unsafeMetadata: {
-                    id: res.id,
-                },
+            const res = await db.$transaction(async (tx) => {
+                const res = await tx.user.create({
+                    data: {
+                        email: email_addresses[0].email_address,
+                        number: phone_numbers[0].phone_number,
+                        clerkId: id,
+                        verified: true
+                    }
+                });
+
+                await tx.balance.create({
+                    data: {
+                        userId: res.id,
+                        amount: 0,
+                        locked: 0
+                    }
+                })
+
+                await clerkClient.users.updateUserMetadata(id, {
+                    unsafeMetadata: {
+                        id: res?.id,
+                    },
+                })
             })
+
+
         } catch (err) {
             await clerkClient.users.deleteUser(id);
             return Response.json({ message: "User Already Exists" });
