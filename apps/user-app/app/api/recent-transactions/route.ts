@@ -22,8 +22,17 @@ export async function GET(req: Request) {
                 id: id
             },
             select: {
-                OnRampTransaction: true,
+                OnRampTransaction: {
+                    take: 5, // Limits to the latest 5 OnRamp transactions
+                    orderBy: {
+                        startTime: 'desc' // Orders by the latest startTime
+                    }
+                },
                 sentTransfers: {
+                    take: 5, // Limits to the latest 5 sent transfers
+                    orderBy: {
+                        startTime: 'desc' // Orders by the latest startTime
+                    },
                     select: {
                         toUser: {
                             select: {
@@ -38,6 +47,10 @@ export async function GET(req: Request) {
                     }
                 },
                 receivedTransfers: {
+                    take: 5, // Limits to the latest 5 received transfers
+                    orderBy: {
+                        startTime: 'desc' // Orders by the latest startTime
+                    },
                     select: {
                         fromUser: {
                             select: {
@@ -50,9 +63,10 @@ export async function GET(req: Request) {
                         amount: true,
                         id: true
                     }
-                },
+                }
             }
-        })
+        });
+
 
         const mergedArray = [
             ...res[0].OnRampTransaction.map(item => ({

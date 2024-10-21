@@ -24,7 +24,7 @@ const AddMoneyForm: React.FC = () => {
   };
 
   return (
-    <div className="w-[50%] h-max p-6 bg-white shadow-md rounded-md">
+    <div className="w-[50%] h-max p-6 shadow-md rounded-xl border bg-card text-card-foreground">
       <h2 className="text-lg font-semibold mb-4">Add Money</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

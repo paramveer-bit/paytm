@@ -11,6 +11,7 @@
     "./AddMoney": "./src/addmoney.tsx",
     "./Balance": "./src/balance.tsx",
     "./RecentTrans": "./src/recentTrans.tsx"
+  
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",

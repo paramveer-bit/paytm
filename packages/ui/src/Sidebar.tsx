@@ -6,8 +6,8 @@ import { Home, SendHorizontal, List, Gift } from 'lucide-react'
 
 const menuItems = [
   { name: 'Home', icon: Home, href: '/' },
-  { name: 'Transfer', icon: SendHorizontal, href: '/transfer' },
-  { name: 'Transactions', icon: List, href: '/transactions' },
+  { name: 'Transfer', icon: SendHorizontal, href: '/user/transfer' },
+  { name: 'Transactions', icon: List, href: '/user/transactions' },
   { name: 'Rewards', icon: Gift, href: '/rewards' },
 ]
 

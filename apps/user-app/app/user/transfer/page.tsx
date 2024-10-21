@@ -58,7 +58,7 @@ function Transfer() {
 
 
   return (
-    <div className='p-2 px-5'>
+    <div className='p-2 px-5 bg-gray-100 h-[90vh]'>
         <h1 className='px-5 text-5xl font-semibold text-violet-600'>Transfer</h1>
         <div className='flex justify-between w-full gap-5 mt-6 mx-auto overflow-hidden'>
             <AddMoney />
