@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server"
 import {ClerkProvider,UserButton} from '@clerk/nextjs'
-import { Appbar } from "@repo/ui/appbar"
-import Sidebar from "@repo/ui/Sidebar"
+import  Appbar  from "@repo/ui/appbar"
 import './globals.css'
 
 

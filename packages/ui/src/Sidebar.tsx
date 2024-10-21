@@ -15,7 +15,7 @@ export default function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="w-64 h-[90vh] bg-primary text-primary-foreground border-r border-primary-foreground/20 shadow-lg">
+    <aside className="w-64 h-[90vh] bg-slate-400 bg-primary text-primary-foreground border-r border-primary-foreground/20 shadow-lg">
       <nav className="h-full px-3 py-4 overflow-y-auto">
         {/* <h1 className="text-2xl font-bold mb-6 px-4">My App</h1> */}
         <ul className="space-y-2">

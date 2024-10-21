@@ -6,10 +6,10 @@ interface AppbarProps {
     UserButton: any
 }
 
-export const Appbar = ({
+export default function Appbar ({
     user,
     UserButton,
-}: AppbarProps) => {
+}: AppbarProps) {
     return (
         <div className="bg-slate-400 border-b-2 border-white text-neutral-100 font-semibold ">
             <div className="container mx-auto flex items-center justify-between p-4">
