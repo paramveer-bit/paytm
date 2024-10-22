@@ -1,8 +1,15 @@
 import { auth } from "@clerk/nextjs/server"
 import {ClerkProvider,UserButton} from '@clerk/nextjs'
-import  Appbar  from "@repo/ui/appbar"
+// import  Appbar  from "@repo/ui/appbar"
 import './globals.css'
+import { Toaster } from "../components/ui/toaster"
+import type { Metadata } from 'next'
 
+
+export const metadata: Metadata = {
+  title: 'PayNext',
+  description: '...',
+}
 
 
 export default function RootLayout({  children,}: {children: React.ReactNode}) {
@@ -10,11 +17,11 @@ export default function RootLayout({  children,}: {children: React.ReactNode}) {
 
   const {userId} = auth()
   return (
-      <html lang="en">
+      <html lang="en">]
         <body className="bg-slate-300">
           <ClerkProvider>
-            <Appbar user={userId} UserButton={UserButton} />
             {children}
+            <Toaster />
             
           </ClerkProvider>
         </body>

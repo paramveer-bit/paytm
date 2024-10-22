@@ -1,3 +1,4 @@
+"use server"
 import db from "@repo/db/client"
 import { auth } from '@clerk/nextjs/server'
 
@@ -7,7 +8,8 @@ interface SessionClaims {
     };
 }
 
-export default async function p2pTransfer(toUserId: number, amount: number) {
+
+export default async function p2pTransfer(toUserId: number, amount: number): Promise<{ message: string }> {
     const session: any = auth().sessionClaims
 
     // Zod validation

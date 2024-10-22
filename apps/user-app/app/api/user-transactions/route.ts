@@ -64,7 +64,7 @@ export async function GET(req: Request) {
             ...res[0].receivedTransfers.map(item => ({ ...item, type: 'credit', type2: 'Received' }))
         ];
 
-        mergedArray.sort((a: any, b: any) => a.startTime - b.startTime);
+        mergedArray.sort((a: any, b: any) => b.startTime - a.startTime);
 
 
         if (!res) {

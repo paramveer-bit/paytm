@@ -5,10 +5,10 @@ import { usePathname } from 'next/navigation'
 import { Home, SendHorizontal, List, Gift } from 'lucide-react'
 
 const menuItems = [
-  { name: 'Home', icon: Home, href: '/' },
+  { name: 'Home', icon: Home, href: '/user/dashboard' },
   { name: 'Transfer', icon: SendHorizontal, href: '/user/transfer' },
   { name: 'Transactions', icon: List, href: '/user/transactions' },
-  { name: 'Rewards', icon: Gift, href: '/rewards' },
+  // { name: 'Rewards', icon: Gift, href: '/rewards' },
 ]
 
 export default function Sidebar() {

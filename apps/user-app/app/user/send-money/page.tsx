@@ -8,6 +8,9 @@ import { Input } from "../../../components/ui/input"
 import { Label } from "../../../components/ui/label"
 import { ArrowLeft, Search, Send } from "lucide-react"
 import axios from "axios"
+import SendMoney from "../../../helpers/p2pTransfer"
+import { useToast } from "../../../hooks/use-toast"
+
 
 type user = {
   id : number,
@@ -19,13 +22,18 @@ type user = {
 export default function Component() {
   const [checking,setChecking] = useState<boolean>(false);
   const [number,setNumber] = useState<string>("");
-  const [recipient, setRecipient] = useState<user>()
+  const [recipient, setRecipient] = useState<user|null>()
   const [suggestedUserList,setSuggestedUserList] = useState<user[]>([])
   const [amount, setAmount] = useState("")
+
+  const[sending,setSending] = useState<boolean>(false)
+  const { toast } = useToast()
 
 
   const handelSelector = (u:user) =>{
     setRecipient(u)
+    setNumber(u.number+"")
+    setSuggestedUserList([])
   }
 
   const debounced = useDebounceCallback(setNumber,300)
@@ -53,11 +61,62 @@ export default function Component() {
   },[number])
 
 
+  const setAllTODeafult = () =>{
+    setChecking(false)
+    setSuggestedUserList([])
+    setNumber("")
+    debounced("")
+    setRecipient(null)
+  }
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    setSending(true)
     e.preventDefault()
-    // Here you would typically handle the money transfer
     console.log(`Sending ₹${amount} to ${recipient}`)
+    if(!recipient || !recipient?.id){
+      toast({
+        title : "Select user 1st",
+        type : "destructive"
+      })
+    }
+    else if(Number(amount)<=0){
+      toast({
+        title : "Enter a valid amount",
+        type : "destructive"
+      })
+    }
+    else{
+      const res : {message:string} = await SendMoney(recipient.id , Number(amount))
+      if(res.message === "Unauthenticated request"){
+        toast({
+          title : res.message,
+          type : "destructive"
+        })
+      }
+      else if(res.message === "Insufficent Balance"){
+        toast({
+          title : res.message,
+          type : "destructive"
+        })
+      }
+      else if(res.message === "Error occur while transfering money"){
+        toast({
+          title : res.message,
+          type : "description"
+        })
+      }
+      else if(res.message === "Successfull transfer of money"){
+        toast({
+          title : res.message,
+          type : "Successfull"
+        })
+        setAllTODeafult()
+      }
+      
+    }
+    setSending(false)
     // Reset form or show confirmation
   }
 
@@ -96,12 +155,12 @@ export default function Component() {
                             onClick={() => handelSelector(user)}
                           >
                             <Avatar className="h-8 w-8 mr-2">
-                              <AvatarImage src={`https://api.dicebear.com/6.x/initials/svg?seed=${user.name}`} alt={user.name} />
-                              <AvatarFallback>{user?.name?.charAt(0) || user.email.charAt(0)}</AvatarFallback>
+                              <AvatarImage src={`https://api.dicebear.com/6.x/initials/svg?seed=${user.name!=null?user.name:user.email}`} alt={user.name} />
+                              <AvatarFallback>{user.name!=null?user?.name?.charAt(0) : user.email.charAt(0)}</AvatarFallback>
                             </Avatar>
                             <div>
-                              <p className="font-medium">{user.name}</p>
-                              <p className="text-sm text-gray-500">{user.id}</p>
+                              <p className="font-medium">{user.name||user.email}</p>
+                              <p className="text-sm text-gray-500">{user.number}</p>
                             </div>
                           </div>
                         ))}
@@ -125,21 +184,24 @@ export default function Component() {
                   </div>
                 </div>
 
+                    {/* Make route for recent users name user it here */}
+
+
                 <div className="space-y-2">
                   <Label>Recent Recipients</Label>
                   <div className="flex space-x-2 overflow-x-auto py-2">
-                    {["Amit", "Priya", "Rahul", "Neha", "Vikram"].map((name) => (
+                    {suggestedUserList.length >0 && suggestedUserList.map((user,idx) => (
                       <Button
-                        key={name}
+                        key={idx}
                         variant="outline"
                         className="flex-shrink-0"
-                        // onClick={() => setRecipient(name)}
+                        onClick={() => handelSelector(user)}
                       >
                         <Avatar className="h-6 w-6 mr-2">
-                          <AvatarImage src={`https://api.dicebear.com/6.x/initials/svg?seed=${name}`} alt={name} />
-                          <AvatarFallback>{name[0]}</AvatarFallback>
+                          <AvatarImage src={`https://api.dicebear.com/6.x/initials/svg?seed=${user.email}`} alt={user.name} />
+                          <AvatarFallback>{"fu"}</AvatarFallback>
                         </Avatar>
-                        {name}
+                        {user.email}
                       </Button>
                     ))}
                   </div>
@@ -148,7 +210,7 @@ export default function Component() {
             </form>
           </CardContent>
           <CardFooter>
-            <Button className="w-full" type="submit" onClick={handleSubmit}>
+            <Button className="w-full" type="submit" onClick={handleSubmit} disabled={sending} >
               <Send className="mr-2 h-4 w-4" />
               Send Money
             </Button>
@@ -168,7 +230,7 @@ export default function Component() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">To</span>
-                {/* <span className="font-medium">{recipient || "Not selected"}</span> */}
+                <span className="font-medium">{recipient?.name || recipient?.email || recipient?.number || "Not selected"}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Amount</span>

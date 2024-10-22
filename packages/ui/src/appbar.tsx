@@ -12,8 +12,8 @@ export default function Appbar ({
 }: AppbarProps) {
     return (
         <div className="bg-slate-400 border-b-2 border-white text-neutral-100 font-semibold ">
-            <div className="container mx-auto flex items-center justify-between p-4">
-                <Link href={"/"} className="text-xl ml-4">My App</Link>
+            <div className="container mx-auto flex items-center justify-between p-3">
+                <Link href={"/"} className="text-3xl ml-4">PayNest</Link>
                 <div>
                     {user ? (
                         <div>
