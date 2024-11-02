@@ -1,13 +1,27 @@
 import express from "express";
+import cors from 'cors';
 import db from "@repo/db/client"
 
+const corsOptions = {
+    origin: 'http://localhost:3001', // Allow requests from this origin
+    optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+};
 
 const app = express();
 app.use(express.json())
 
+app.use(cors(corsOptions))
+
+app.get("/hello", async (req, res) => {
+    res.json({
+        message: "Hello"
+    })
+})
+
 app.post("/hdfcWebhook", async (req, res) => {
-    // ZOD Validation
+    // ZOD Validation   
     // Check hsfc server secret
+    console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
     const paymentInformation = {
         token: req.body.token,
         amount: req.body.amount,
@@ -47,5 +61,5 @@ app.post("/hdfcWebhook", async (req, res) => {
     }
 })
 
-app.listen(3003);
+app.listen(3009);
 

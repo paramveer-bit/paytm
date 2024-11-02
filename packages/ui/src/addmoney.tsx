@@ -1,9 +1,11 @@
+'use client'
 import React, { useState } from 'react';
+import RampTransaction from '@repo/user-app/helpers/rampTransaction';
 
 const AddMoneyForm: React.FC = () => {
   const [amount, setAmount] = useState('');
   const [bank, setBank] = useState(''); // Default to empty
-
+  const [redirecting,setRedirecting] = useState(false)
   const banks = [
     'HDFC Bank',
     'ICICI Bank',
@@ -17,10 +19,11 @@ const AddMoneyForm: React.FC = () => {
     'Canara Bank',
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(`Amount: ${amount}, Bank: ${bank}`);
-    // Add your form submission logic here
+    const res = await RampTransaction('HDFC Bank', parseInt(amount));
+    window.location.href = "https://netbanking.hdfcbank.com"
+    setRedirecting(true)
   };
 
   return (
@@ -65,6 +68,7 @@ const AddMoneyForm: React.FC = () => {
         <button
           type="submit"
           className="w-full py-2 bg-black text-white rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            disabled={redirecting}
         >
           Add Money
         </button>

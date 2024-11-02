@@ -89,8 +89,10 @@ export default function Component() {
 
           </Button>
           <Button className="h-20 text-lg" variant="outline">
-            <SendHorizontal className="mr-2 h-5 w-5" />
-            Send Money
+            <Link href={"/user/send-money"} className="flex">
+              <SendHorizontal className="mr-2 h-5 w-5 my-auto" />
+              Send Money
+            </Link>
           </Button>
         </div>
 

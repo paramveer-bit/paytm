@@ -1,3 +1,4 @@
+"use server"
 import db from "@repo/db/client"
 import { auth } from '@clerk/nextjs/server'
 
@@ -9,9 +10,10 @@ interface SessionClaims {
 
 
 
-export default async function generate(provider: string, amount: number) {
+export default async function generate(provider: string, amount: number): Promise<{ message: string }> {
 
     const session: any = auth().sessionClaims
+    console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
 
     if (!session || !session.user_id || !session.user_id?.id) {
         return {
