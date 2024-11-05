@@ -2,12 +2,9 @@ import { NextResponse } from "next/server"
 import db from "@repo/db/client"
 import { auth } from '@clerk/nextjs/server'
 
-type user = {
-    id?: number
-}
 
 export async function POST(req: Request) {
-    // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
+
     const user: any = auth().sessionClaims?.user_id
     const { number }: { number: string } = await req.json()
 
@@ -17,7 +14,6 @@ export async function POST(req: Request) {
         return new Response('No User Found. Login First', { status: 401 })
     }
 
-    const id = user.id
 
     try {
         const res = await db.user.findMany({

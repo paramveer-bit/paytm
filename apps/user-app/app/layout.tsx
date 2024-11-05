@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server"
+// import { auth } from "@clerk/nextjs/server"
 import {ClerkProvider,UserButton} from '@clerk/nextjs'
 // import  Appbar  from "@repo/ui/appbar"
 import './globals.css'
@@ -15,9 +15,8 @@ export const metadata: Metadata = {
 export default function RootLayout({  children,}: {children: React.ReactNode}) {
 
 
-  const {userId} = auth()
   return (
-      <html lang="en">]
+      <html lang="en">
         <body className="bg-slate-300">
           <ClerkProvider>
             {children}

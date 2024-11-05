@@ -56,7 +56,7 @@ export async function POST(req: Request) {
     console.log(eventType)
     if (eventType === "user.created") {
 
-        const { email_addresses, id, phone_numbers, unsafe_metadata } = evt.data
+        const { email_addresses, id, phone_numbers } = evt.data
         if (email_addresses.length < 1 || phone_numbers.length < 1) {
             return new Response('', { status: 200 })
         }

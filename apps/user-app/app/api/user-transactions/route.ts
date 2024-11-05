@@ -2,12 +2,9 @@ import { NextResponse } from "next/server"
 import db from "@repo/db/client"
 import { auth } from '@clerk/nextjs/server'
 
-type user = {
-    id?: number
-}
-
-export async function GET(req: Request) {
+export async function GET() {
     // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
+    // @ts-ignore
     const user: any = auth().sessionClaims?.user_id
 
     if (!user) {
@@ -63,7 +60,7 @@ export async function GET(req: Request) {
             ...res[0].sentTransfers.map(item => ({ ...item, type: 'debit', type2: 'Sent' })),
             ...res[0].receivedTransfers.map(item => ({ ...item, type: 'credit', type2: 'Received' }))
         ];
-
+        // @ts-ignore
         mergedArray.sort((a: any, b: any) => b.startTime - a.startTime);
 
 

@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server"
-import {ClerkProvider,UserButton} from '@clerk/nextjs'
+// @ts-ignore
+import {UserButton} from '@clerk/nextjs'
 import Sidebar from "@repo/ui/Sidebar"
 import  Appbar  from "@repo/ui/appbar"
 

@@ -2,11 +2,11 @@
 import { useEffect, useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui/avatar"
 import { Button } from "../../../components/ui/button"
-import { useDebounceCallback, useDebounceValue } from 'usehooks-ts'
+import { useDebounceCallback } from 'usehooks-ts'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../../components/ui/card"
 import { Input } from "../../../components/ui/input"
 import { Label } from "../../../components/ui/label"
-import { ArrowLeft, Search, Send } from "lucide-react"
+import {  Search, Send } from "lucide-react"
 import axios from "axios"
 import SendMoney from "../../../helpers/p2pTransfer"
 import { useToast } from "../../../hooks/use-toast"
@@ -20,7 +20,6 @@ type user = {
 }
 
 export default function Component() {
-  const [checking,setChecking] = useState<boolean>(false);
   const [number,setNumber] = useState<string>("");
   const [recipient, setRecipient] = useState<user|null>()
   const [suggestedUserList,setSuggestedUserList] = useState<user[]>([])
@@ -42,7 +41,6 @@ export default function Component() {
   const checkNumber = async () =>{
     // if(!number) setRecipient();
     if(number){
-      setChecking(true)
       try {
         const res = await axios.post('/api/check-user',{number:`+91${number}`})
         console.log(res.data.data)
@@ -62,7 +60,6 @@ export default function Component() {
 
 
   const setAllTODeafult = () =>{
-    setChecking(false)
     setSuggestedUserList([])
     setNumber("")
     debounced("")
@@ -78,13 +75,13 @@ export default function Component() {
     if(!recipient || !recipient?.id){
       toast({
         title : "Select user 1st",
-        type : "destructive"
+        variant : "destructive"
       })
     }
     else if(Number(amount)<=0){
       toast({
         title : "Enter a valid amount",
-        type : "destructive"
+        variant : "destructive"
       })
     }
     else{
@@ -92,25 +89,25 @@ export default function Component() {
       if(res.message === "Unauthenticated request"){
         toast({
           title : res.message,
-          type : "destructive"
+          variant : "destructive"
         })
       }
       else if(res.message === "Insufficent Balance"){
         toast({
           title : res.message,
-          type : "destructive"
+          variant : "destructive"
         })
       }
-      else if(res.message === "Error occur while transfering money"){
+      else if(res.message === "Insufficent Balance"){
         toast({
           title : res.message,
-          type : "description"
+          variant : "destructive"
         })
       }
       else if(res.message === "Successfull transfer of money"){
         toast({
           title : res.message,
-          type : "Successfull"
+          variant : "default"
         })
         setAllTODeafult()
       }
