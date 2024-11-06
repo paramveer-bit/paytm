@@ -13,7 +13,7 @@ import Image from 'next/image'
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
+  console.log(process.env.CLERK_SECRET_KEY)
   return (
     <div className="bg-gradient-to-b from-primary-50 to-primary-100 min-h-screen">
       <header className="bg-white shadow-sm">
