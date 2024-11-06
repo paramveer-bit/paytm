@@ -14,6 +14,7 @@ type user = {
   number? : string|null
 }
 
+
 type transaction = {
   id : number,
   amount : number,
