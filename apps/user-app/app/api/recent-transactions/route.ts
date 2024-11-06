@@ -63,8 +63,6 @@ export async function GET() {
                 }
             }
         });
-
-
         const mergedArray = [
             ...res[0].OnRampTransaction.map(item => ({
                 ...item,
@@ -77,6 +75,8 @@ export async function GET() {
         // @ts-ignore
         mergedArray.sort((a: any, b: any) => b.startTime - a.startTime);
 
+
+        // Hello
 
         if (!res) {
             return NextResponse.json({ success: false, message: "Some Error occured while fethcing user Transactions" }, { status: 500 })
