@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
         const transaction = await db.onRampTransaction.findFirst({
             where: {
-                id: Number(transId)
+                token: transId
             }
         })
 

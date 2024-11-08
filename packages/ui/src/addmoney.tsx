@@ -23,17 +23,17 @@ const AddMoneyForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // const res = await RampTransaction('HDFC Bank', parseInt(amount));
-    // if(res.message === "Unauthenticated request"){
-    //     alert("Unauthenticated request")
-    //     return
-    // }
+    const res = await RampTransaction('HDFC Bank', parseInt(amount));
+    if(res.message === "Unauthenticated request"){
+        alert("Unauthenticated request")
+        return
+    }
     console.log("hiiiiiiiiiiiiiii")
     setTimeout(()=>{
-      router.push(`/payment/${1000}`)
+      router.push(`/payment/${res.tid}`)
     },3000)
     // window.location.href = "https://netbanking.hdfcbank.com"
-    window.open(`https://baking-server.vercel.app/transfer/?tid=${1000}&amount=${10}&token=${1000}`)
+    window.open(`https://baking-server.vercel.app/transfer/?tid=${res.userId}&amount=${amount}&token=${res.tid}`)
     // window.open(`https://baking-server.vercel.app/transfer/?tid=${res.userId}&amount=${amount}&token=${res.tid}`)
     setRedirecting(true)
     

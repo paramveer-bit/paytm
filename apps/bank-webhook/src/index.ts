@@ -3,7 +3,7 @@ import cors from 'cors';
 import db from "@repo/db/client"
 
 const corsOptions = {
-    origin: 'http://localhost:3001', // Allow requests from this origin
+    origin: 'https://baking-server.vercel.app', // Allow requests from this origin
     optionsSuccessStatus: 200 // Some legacy browsers choke on 204
 };
 

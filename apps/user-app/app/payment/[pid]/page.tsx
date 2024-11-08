@@ -54,6 +54,9 @@ function Payment() {
         try {
             const res = await axios.post("/api/payment-status",{transId : transactionId})
             setTransaction(res.data.data)
+            console.log("--------------@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+            console.log(res.data.data)
+            console.log(res)
         } catch (error) {
             console.error(error)
             console.log("Error while fetching transaction details") 
