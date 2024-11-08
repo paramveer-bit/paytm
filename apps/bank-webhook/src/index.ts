@@ -27,8 +27,52 @@ app.post("/hdfcWebhook", async (req, res) => {
         amount: req.body.amount,
         userId: req.body.user_identifier
     }
+
+
+    console.log(paymentInformation)
+
+    if (!paymentInformation.token || !paymentInformation.amount || !paymentInformation.userId) {
+        res.status(400).json({
+            message: "Invalid request"
+        })
+        return
+    }
+    console.log("----------------------------------")
     // Updating in db,add txn
     try {
+        const result = await db.onRampTransaction.findFirst({
+            where: {
+                token: paymentInformation.token
+            }
+        });
+
+        if (!result) {
+            res.status(200).json({
+                message: "Invalid token"
+            })
+            return
+        }
+
+        if (result && result.status === "Success") {
+            res.status(200).json({
+                message: "Already Captured"
+            })
+            return
+        }
+
+        const userResult = await db.user.findFirst({
+            where: {
+                id: Number(paymentInformation.userId)
+            }
+        });
+
+        if (!userResult) {
+            res.status(200).json({
+                message: "Invalid user"
+            })
+            return
+        }
+
         await db.$transaction([
             db.balance.updateMany({
                 where: {

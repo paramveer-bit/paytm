@@ -10,7 +10,7 @@ interface SessionClaims {
 
 
 
-export default async function generate(provider: string, amount: number): Promise<{ message: string }> {
+export default async function generate(provider: string, amount: number): Promise<{ message: string, tid?: string, userId?: number }> {
 
     const session: any = auth().sessionClaims
     console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
@@ -33,7 +33,9 @@ export default async function generate(provider: string, amount: number): Promis
     });
 
     return {
-        message: "Done"
+        message: "Done",
+        tid: token,
+        userId: session.user_id?.id
     }
 
 

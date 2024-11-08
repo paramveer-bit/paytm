@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import RampTransaction from '@repo/user-app/helpers/rampTransaction';
+import { useRouter } from 'next/navigation';
 
 const AddMoneyForm: React.FC = () => {
   const [amount, setAmount] = useState('');
@@ -18,12 +19,24 @@ const AddMoneyForm: React.FC = () => {
     'Union Bank of India',
     'Canara Bank',
   ];
+  const router = useRouter(); 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await RampTransaction('HDFC Bank', parseInt(amount));
-    window.location.href = "https://netbanking.hdfcbank.com"
+    // const res = await RampTransaction('HDFC Bank', parseInt(amount));
+    // if(res.message === "Unauthenticated request"){
+    //     alert("Unauthenticated request")
+    //     return
+    // }
+    console.log("hiiiiiiiiiiiiiii")
+    setTimeout(()=>{
+      router.push(`/payment/${1000}`)
+    },3000)
+    // window.location.href = "https://netbanking.hdfcbank.com"
+    window.open(`https://baking-server.vercel.app/transfer/?tid=${1000}&amount=${10}&token=${1000}`)
+    // window.open(`https://baking-server.vercel.app/transfer/?tid=${res.userId}&amount=${amount}&token=${res.tid}`)
     setRedirecting(true)
+    
   };
 
   return (

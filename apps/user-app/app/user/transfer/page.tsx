@@ -22,7 +22,7 @@ type transaction = {
 
 function Transfer() {
 
-    const [balance,SetBalance] = useState<balance>();
+    const [balance,SetBalance] = useState<balance>()
     const[transaction,setTransactions] = useState<transaction[]>([]);
 
     const fetchBalance = async()=>{
