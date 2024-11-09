@@ -54,8 +54,6 @@ function Payment() {
         try {
             const res = await axios.post("/api/payment-status",{transId : transactionId})
             setTransaction(res.data.data)
-            console.log("--------------@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-            console.log(res.data.data)
             console.log(res)
         } catch (error) {
             console.error(error)
@@ -76,7 +74,7 @@ function Payment() {
             
             const date = new Date();
             date.setMinutes(date.getMinutes() + 5);
-            const date2 = new Date("2024-11-07T21:03:22.493Z");
+            const date2 = new Date(transaction.startTime);
             setTimeLeft(date2.getTime() - date.getTime())
         }
         setFetching(false)
