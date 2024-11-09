@@ -44,6 +44,7 @@ function Payment() {
     const changeStatus = async (status : string)=>{
         try {
             const res = await axios.post("/api/change-transactionStatus",{transId : transactionId, status : status})
+            fetchTransaction()
         } catch (error) {
             console.error(error)
             console.log("Error while changing transaction status")  
@@ -73,14 +74,21 @@ function Payment() {
             setStatus(transaction.status)
             
             const date = new Date();
-            date.setMinutes(date.getMinutes() + 5);
             const date2 = new Date(transaction.startTime);
-            setTimeLeft(date.getTime()-date2.getTime())
+            date2.setMinutes(date2.getMinutes() + 5);
+
+            console.log(date)   
+            console.log(date2)
+            setTimeLeft(Math.floor((date2.getTime()-date.getTime())/1000))
+            const temp = (12)
+            console.log(Math.floor(temp))
         }
         setFetching(false)
     },[transaction])
 
     useEffect(()=>{
+        console.log(timeLeft+"hello")
+
         if(timeLeft <= 0 && status === "Processing"){
             console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{[")
 
@@ -107,7 +115,7 @@ function Payment() {
     }
     else{
         if(status === "Processing"){
-            return <ProcessingPayment redirectMinutes={timeLeft/60}/>
+            return <ProcessingPayment redirectMinutes={Math.floor(timeLeft/60   )}/>
         }
         else if(status === "Success"){
             return <SuccessPayment id={transaction?.id||0} amount={transaction?.amount||0} date={transaction?.startTime || ""}/>

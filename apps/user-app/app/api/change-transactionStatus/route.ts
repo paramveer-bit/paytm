@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     if (!transId) {
         return NextResponse.json({ success: false, message: "Transaction Id not found" }, { status: 400 })
     }
+    console.log(transId)
 
     try {
 
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
 
         await db.onRampTransaction.update({
             where: {
-                id: Number(transId)
+                token: transId
             },
             data: {
                 status: status

@@ -49,11 +49,6 @@ function Transfer() {
         fetchBalance()
         fetchTransactions()
     },[])
-
-    useEffect(()=>{
-        console.log("-------")
-        console.log(transaction)
-    },[transaction])
     
 
 

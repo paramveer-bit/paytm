@@ -20,7 +20,7 @@ export async function GET() {
                 userId: id
             },
             orderBy: {
-                startTime: 'asc'
+                startTime: 'desc'
             },
             select: {
                 id: true,
