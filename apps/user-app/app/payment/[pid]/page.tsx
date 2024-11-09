@@ -75,7 +75,7 @@ function Payment() {
             const date = new Date();
             date.setMinutes(date.getMinutes() + 5);
             const date2 = new Date(transaction.startTime);
-            setTimeLeft(date2.getTime() - date.getTime())
+            setTimeLeft(date.getTime()-date2.getTime())
         }
         setFetching(false)
     },[transaction])
