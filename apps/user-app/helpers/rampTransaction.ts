@@ -28,7 +28,7 @@ export default async function generate(provider: string, amount: number): Promis
             startTime: new Date(),
             token: token,
             userId: Number(session.user_id?.id),
-            amount: amount * 100
+            amount: amount
         }
     });
 

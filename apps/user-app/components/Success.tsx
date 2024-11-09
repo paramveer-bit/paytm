@@ -37,7 +37,7 @@ export default function Component({id,amount,date}:{id:number,amount:number,date
         </CardContent>
         <CardFooter className="flex justify-center">
           <Button asChild>
-            <Link href="/dashboard">Go to Dashboard</Link>
+            <Link href="/user/dashboard">Go to Dashboard</Link>
           </Button>
         </CardFooter>
       </Card>
